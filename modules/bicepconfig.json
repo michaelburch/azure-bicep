@@ -1,0 +1,10 @@
+{
+    "cloud": {
+      "currentProfile": "AzureCloud",
+      "credentialPrecedence": [
+        "Environment",  
+        "AzureCLI",
+        "AzurePowerShell"
+      ]
+    }
+  }
