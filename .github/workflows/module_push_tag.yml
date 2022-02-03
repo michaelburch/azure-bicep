@@ -34,4 +34,5 @@ jobs:
         with:
           azcliversion: 2.32.0
           inlineScript: |
+            az bicep install
             for filename in `ls *.bicep`; do  az bicep publish --file $filename --target br:michaelburch101.azurecr.io/bicep/modules/`basename $filename .bicep`:${{github.ref_name}}; done
