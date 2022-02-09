@@ -54,8 +54,9 @@ var authorizations = [
 ]
 param rgName string = 'resourceGroup'
 
+var registrationName = guid(mspOfferName, managedByTenantId, managedByPrincipalId)
 resource mspRegistration 'Microsoft.ManagedServices/registrationDefinitions@2020-02-01-preview' = {
-  name: guid(mspOfferName)
+  name: registrationName
   properties: {
     registrationDefinitionName: mspOfferName
     description: mspOfferDescription
@@ -65,10 +66,10 @@ resource mspRegistration 'Microsoft.ManagedServices/registrationDefinitions@2020
 }
 // Limit delegation to single resource group 
 module registrationAssignment './modules/registration_assignment.bicep' = {
-  name: guid(mspOfferName)
+  name: guid(mspOfferName, managedByTenantId, rgName)
   scope: resourceGroup(rgName)
   params: {
-    registrationName: guid(mspOfferName)
+    registrationName: registrationName
     registrationDefinitionId: mspRegistration.id
   }
 }
