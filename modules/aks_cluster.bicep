@@ -15,6 +15,7 @@ param subnetId string
 param dnsPrefix string = name
 param privateDnsZoneId string = ''
 param identityId string = ''
+param podIdentityProfile object = {}
 
 resource aksCluster 'Microsoft.ContainerService/managedClusters@2021-03-01' = {
   name: name
@@ -66,6 +67,11 @@ resource aksCluster 'Microsoft.ContainerService/managedClusters@2021-03-01' = {
       enableAzureRBAC: true
       managed: true
       tenantID: subscription().tenantId
+    }
+    podIdentityProfile: !empty(podIdentityProfile) ? podIdentityProfile : {
+      enabled: false
+      userAssignedIdentities: [ ]
+      userAssignedIdentityExceptions: [ ]
     }
     addonProfiles:{
       omsagent: {
