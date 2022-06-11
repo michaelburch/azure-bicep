@@ -15,5 +15,4 @@ resource requestedCert 'Microsoft.KeyVault/vaults/secrets@2021-11-01-preview' ex
 output secretUri string = requestedCert.properties.secretUri
 output contentType string = requestedCert.properties.contentType
 output secretUriWithVersion string = requestedCert.properties.secretUriWithVersion
-output value string = requestedCert.properties.value
 output attributes object = requestedCert.properties.attributes
