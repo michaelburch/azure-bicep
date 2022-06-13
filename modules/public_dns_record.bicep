@@ -10,6 +10,7 @@ resource targetPublicZone 'Microsoft.Network/dnsZones@2018-05-01' existing = {
 
 resource targetCnameRecord 'Microsoft.Network/dnsZones/CNAME@2018-05-01' = if (recordType == 'CNAME@2018-05-01') {
   name: recordName
+  parent: targetPublicZone
   properties: recordProperties
 }
 
