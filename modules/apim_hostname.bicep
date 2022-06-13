@@ -18,6 +18,8 @@ var hostnames = concat(sourceApim.properties.hostnameConfigurations, [
     type: 'Proxy'
   }
 ])
+var publisherName = sourceApim.properties.publisherName
+var publisherEmail = sourceApim.properties.publisherEmail
 
 resource targetApim 'Microsoft.ApiManagement/service@2021-12-01-preview' = {
   name: apimName
@@ -27,8 +29,8 @@ resource targetApim 'Microsoft.ApiManagement/service@2021-12-01-preview' = {
   }
   location: location
   properties: {
-    publisherName: sourceApim.properties.publisherName
-    publisherEmail: sourceApim.properties.publisherEmail
+    publisherName: publisherName
+    publisherEmail: publisherEmail
     hostnameConfigurations: hostnames
   }
 }
