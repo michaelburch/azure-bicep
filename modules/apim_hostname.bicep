@@ -3,6 +3,7 @@ targetScope='resourceGroup'
 param hostName string
 param certificateSecretUri string
 param sourceApim object
+param sourceApimName string
 
 var hostnames = concat(sourceApim.properties.hostnameConfigurations, [
   {
@@ -13,7 +14,7 @@ var hostnames = concat(sourceApim.properties.hostnameConfigurations, [
 ])
 
 resource targetApim 'Microsoft.ApiManagement/service@2021-12-01-preview' = {
-  name: sourceApim.name
+  name: sourceApimName
   sku: sourceApim.sku
   location: sourceApim.location
   properties: {
