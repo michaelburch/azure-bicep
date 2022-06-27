@@ -23,3 +23,4 @@ resource vnetLinks 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-0
 }]
 
 output name string = privateDnsZone.name
+output id string = privateDnsZone.id
