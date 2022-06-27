@@ -19,3 +19,4 @@ resource vnet 'Microsoft.Network/virtualNetworks@2021-02-01' = {
 
 output id string = vnet.id
 output name string = vnet.name
+output properties object = vnet.properties
