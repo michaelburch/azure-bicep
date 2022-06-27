@@ -86,7 +86,7 @@ resource databaseResources 'Microsoft.DBforMySQL/flexibleServers/databases@2021-
   name: '${db.name}'
   parent: mysqlDbServer
   properties: {
-    charset: db.charset ?? 'utf8'
-    collation: db.collation ?? 'utf8_general_ci'
+    charset: !empty(db.charset) ? db.charset : 'utf8'
+    collation: !empty(db.collation) ? db.collation: 'utf8_general_ci'
   }
 }]
