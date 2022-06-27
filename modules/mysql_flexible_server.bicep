@@ -48,7 +48,8 @@ param mysqlSubnetId string
 @description('DNS Zone Id')
 param zoneId string
 
-
+@description('Databases to create')
+param databases array = []
 
 resource mysqlDbServer 'Microsoft.DBforMySQL/flexibleServers@2021-05-01' = {
   name: serverName
@@ -80,3 +81,12 @@ resource mysqlDbServer 'Microsoft.DBforMySQL/flexibleServers@2021-05-01' = {
     }
   }
 }
+
+resource databaseResources 'Microsoft.DBforMySQL/flexibleServers/databases@2021-05-01' = [for db in databases :{
+  name: '${db.name}'
+  parent: mysqlDbServer
+  properties: {
+    charset: db.charset ?? 'utf8'
+    collation: db.collation ?? 'utf8_general_ci'
+  }
+}]
