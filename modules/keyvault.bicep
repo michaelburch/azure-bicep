@@ -29,6 +29,7 @@ param skuName string = 'standard'
 param accessPolicies array = []
 param ipRules array = []
 param virtualNetworkRules array = []
+param privateEndpointSubnetId string = ''
 
 resource kv 'Microsoft.KeyVault/vaults@2021-11-01-preview' = {
   name: keyVaultName
@@ -49,6 +50,27 @@ resource kv 'Microsoft.KeyVault/vaults@2021-11-01-preview' = {
       bypass: 'AzureServices'
       ipRules: ipRules
       virtualNetworkRules: virtualNetworkRules
+    }
+  }
+}
+
+resource privateEndpoint 'Microsoft.Network/privateEndpoints@2021-08-01' = if(!empty(privateEndpointSubnetId)) {
+  name: '${kv.name}-pe'
+  location: location
+  properties: {
+    privateLinkServiceConnections: [
+      {
+        name: '${kv.name}-pe'
+        properties: {
+          privateLinkServiceId: kv.id
+          groupIds: [
+            'vault'
+          ]
+        }
+      }
+    ]
+    subnet: {
+      id: privateEndpointSubnetId
     }
   }
 }
