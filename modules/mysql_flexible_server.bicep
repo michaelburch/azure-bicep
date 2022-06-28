@@ -94,7 +94,7 @@ resource databaseResources 'Microsoft.DBforMySQL/flexibleServers/databases@2021-
   }
 }]
 
-resource dbServerConfig 'Microsoft.DBforMySQL/flexibleServers/configurations@2019-08-01' = if (!requireSecure) {
+resource dbServerConfig 'Microsoft.DBforMySQL/flexibleServers/configurations@2021-05-01' = if (!requireSecure) {
   name: 'require_secure_transport'
   parent: mysqlDbServer
   properties: {
