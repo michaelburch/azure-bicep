@@ -51,6 +51,9 @@ param zoneId string
 @description('Databases to create')
 param databases array = []
 
+@description('Require SSL')
+param requireSecure bool = true
+
 resource mysqlDbServer 'Microsoft.DBforMySQL/flexibleServers@2021-05-01' = {
   name: serverName
   location: location
@@ -90,3 +93,12 @@ resource databaseResources 'Microsoft.DBforMySQL/flexibleServers/databases@2021-
     collation: !empty(db.collation) ? db.collation: 'utf8_general_ci'
   }
 }]
+
+resource dbServerConfig 'Microsoft.DBforMySQL/flexibleServers/configurations@2019-08-01' = if (!requireSecure) {
+  name: 'require_secure_transport'
+  parent: mysqlDbServer
+  properties: {
+    value: 'OFF'
+    source: 'user-override'
+  }
+}
