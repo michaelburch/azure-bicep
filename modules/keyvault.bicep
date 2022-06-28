@@ -16,6 +16,9 @@ param enabledForTemplateDeployment bool = false
 @description('Specifies the Azure Active Directory tenant ID that should be used for authenticating requests to the key vault. Get it by using Get-AzSubscription cmdlet.')
 param tenantId string = subscription().tenantId
 
+@description('When true, the key vault will use Role Based Access Control (RBAC) for authorization of data actions, and the access policies specified in vault properties will be ignored')
+param enableRbacAuthorization bool = true
+
 @description('Specifies whether the key vault is a standard vault or a premium vault.')
 @allowed([
   'standard'
@@ -36,6 +39,7 @@ resource kv 'Microsoft.KeyVault/vaults@2021-11-01-preview' = {
     enabledForTemplateDeployment: enabledForTemplateDeployment
     tenantId: tenantId
     accessPolicies: accessPolicies
+    enableRbacAuthorization: enableRbacAuthorization
     sku: {
       name: skuName
       family: 'A'
