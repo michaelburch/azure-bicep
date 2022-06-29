@@ -30,10 +30,12 @@ param accessPolicies array = []
 param ipRules array = []
 param virtualNetworkRules array = []
 param privateEndpointSubnetId string = ''
+param tags object = {}
 
 resource kv 'Microsoft.KeyVault/vaults@2021-11-01-preview' = {
   name: keyVaultName
   location: location
+  tags: tags
   properties: {
     enabledForDeployment: enabledForDeployment
     enabledForDiskEncryption: enabledForDiskEncryption
@@ -57,6 +59,7 @@ resource kv 'Microsoft.KeyVault/vaults@2021-11-01-preview' = {
 resource privateEndpoint 'Microsoft.Network/privateEndpoints@2021-08-01' = if(!empty(privateEndpointSubnetId)) {
   name: '${kv.name}-pe'
   location: location
+  tags: tags
   properties: {
     privateLinkServiceConnections: [
       {
