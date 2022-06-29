@@ -54,8 +54,11 @@ param databases array = []
 @description('Require SSL')
 param requireSecure bool = true
 
+param tags object = {}
+
 resource mysqlDbServer 'Microsoft.DBforMySQL/flexibleServers@2021-05-01' = {
   name: serverName
+  tags: tags
   location: location
   sku: {
     name: skuName
